@@ -13,18 +13,19 @@ static int proccgi_lwip(int socket_id, char *cmd) {
         cJSON_Delete(json);
         return -1;
     } else {
-        cJSON_Value *url;
-        if (FUNC_OK != getObjectValueFromJson(json, "url", url)) {
+        cJSON_Value url;
+        if (FUNC_OK != getObjectValueFromJson(json, "url", &url)) {
             return -1;
         }
-        // cgi_func = cgi_filename_match(url->string_val);
-        // if (NULL == cgi_func){
-        //     return -1;
-        // }
+        printf("url value: [%s] [%d]\n", url.string_val, url.number_val);
+        cgi_func = cgi_filename_match(url.string_val);
+        if (NULL == cgi_func){
+            return -1;
+        }
         para.sd = socket_id;
         para.APIs_recv = cmd;
         para.need_restart = false;
-        // cgi_func(&para);
+        cgi_func(&para);
     }
 
     cJSON_Delete(json);

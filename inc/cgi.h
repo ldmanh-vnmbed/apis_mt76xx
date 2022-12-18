@@ -42,12 +42,12 @@ CGI_FUNC cgi_filename_match(char *path_info);
 int getObjectValueFromJson(cJSON *json, char *obj, cJSON_Value *val);
 
 /**
- * @brief Get the Device Infor object
+ * @brief Get the Device Info object
  *
  * @param para
  * @return int
  */
-static int getDeviceInfor(struct cgi_para *para);
+static int getDeviceInfo(struct cgi_para *para);
 
 static int configWifi(struct cgi_para *para);
 
@@ -57,6 +57,6 @@ static int setStream(struct cgi_para *para);
 
 static int getStreamStatus(struct cgi_para *para);
 
-static int getVideoInfor(struct cgi_para *para);
+static int getVideoInfo(struct cgi_para *para);
 
 static int factoryReset(struct cgi_para *para);
