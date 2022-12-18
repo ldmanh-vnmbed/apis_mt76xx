@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "cgi.h": "c",
+        "common.h": "c"
+    }
+}
