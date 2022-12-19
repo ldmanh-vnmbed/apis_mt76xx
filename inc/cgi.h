@@ -11,25 +11,19 @@ typedef enum {
     CMD_INVALID_URL,
 } CLIENT_ERRORS;
 
-typedef int (*CGI_SEND)(int sd, const char *buff, size_t len);
-
 struct cgi_para {
-    int sd;         // socket id
-    CGI_SEND func;  // send function
-    char *cmd;      // cmd
-    int cmd_len;    // cmd length
+    int socket_id;         // socket id
     bool need_restart;
-    char *uart_recv;  // data recv from T31
-    char *uart_send;  // data send to T31
     char *APIs_send;  // data send to client/mobile app
     char *APIs_recv;  // data recv from client/mobile app
+    int status;
 };
 
-typedef int (*CGI_FUNC)(struct cgi_para *para);
+typedef void (*API_FUNC)(struct cgi_para *para);
 
 struct cgi {
     char *name;
-    CGI_FUNC func;
+    API_FUNC func;
 };
 
 typedef struct cJSON_Value {
@@ -37,7 +31,7 @@ typedef struct cJSON_Value {
     int number_val;
 } cJSON_Value;
 
-CGI_FUNC cgi_filename_match(char *path_info);
+API_FUNC cgi_filename_match(char *path_info);
 
 int getObjectValueFromJson(cJSON *json, char *obj, cJSON_Value *val);
 
@@ -47,16 +41,16 @@ int getObjectValueFromJson(cJSON *json, char *obj, cJSON_Value *val);
  * @param para
  * @return int
  */
-static int getDeviceInfo(struct cgi_para *para);
+static void getDeviceInfo(struct cgi_para *para);
 
-static int configWifi(struct cgi_para *para);
+static void configWifi(struct cgi_para *para);
 
-static int configStream(struct cgi_para *para);
+static void configStream(struct cgi_para *para);
 
-static int setStream(struct cgi_para *para);
+static void setStream(struct cgi_para *para);
 
-static int getStreamStatus(struct cgi_para *para);
+static void getStreamStatus(struct cgi_para *para);
 
-static int getVideoInfo(struct cgi_para *para);
+static void getVideoInfo(struct cgi_para *para);
 
-static int factoryReset(struct cgi_para *para);
+static void factoryReset(struct cgi_para *para);
